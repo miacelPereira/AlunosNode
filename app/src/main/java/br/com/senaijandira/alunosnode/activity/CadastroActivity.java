@@ -67,19 +67,18 @@ public class CadastroActivity extends AppCompatActivity implements CadastroView 
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle(titulo);
         alert.setMessage(mensagem);
+        alert.create();
         alert.setPositiveButton("OK", new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 finish();
             }
         });
-        alert.create();
         alert.show();
     }
 
     public static class DatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
-
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
