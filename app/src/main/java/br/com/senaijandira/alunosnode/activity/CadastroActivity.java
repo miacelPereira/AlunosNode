@@ -1,81 +1,107 @@
 package br.com.senaijandira.alunosnode.activity;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
+
+import java.util.Calendar;
 
 import br.com.senaijandira.alunosnode.R;
 import br.com.senaijandira.alunosnode.model.Aluno;
-import br.com.senaijandira.alunosnode.model.ApiResult;
+import br.com.senaijandira.alunosnode.presenter.CadastroPresenter;
 import br.com.senaijandira.alunosnode.service.AlunosService;
 import br.com.senaijandira.alunosnode.service.ServiceFactory;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import br.com.senaijandira.alunosnode.view.CadastroView;
+import util.DateUtil;
 
-public class CadastroActivity extends AppCompatActivity {
+public class CadastroActivity extends AppCompatActivity implements CadastroView {
 
-    EditText txtNome;
-    EditText txtDataNascimento;
-    EditText txtMatricula;
-    EditText txtCPF;
+    static EditText txtNome, txtDataNascimento, txtMatricula, txtCPF;
+    AlunosService service = ServiceFactory.create();
+    CadastroPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
+        presenter = new CadastroPresenter(this, service);
 
         txtNome = findViewById(R.id.txtNome);
         txtDataNascimento = findViewById(R.id.txtDataNascimento);
         txtMatricula = findViewById(R.id.txtMatricula);
         txtCPF = findViewById(R.id.txtCPF);
+
     }
 
     public void cadastrarAluno(View view){
         String nome = txtNome.getText().toString();
         String dtNascimento = txtDataNascimento.getText().toString();
+        int dataFormatada = new DateUtil().convertToInt(dtNascimento);
         String matricula = txtMatricula.getText().toString();
         String cpf = txtCPF.getText().toString();
 
-
-
         Aluno aluno = new Aluno();
         aluno.setNome(nome);
-        aluno.setDataNascimento(Integer.parseInt(dtNascimento));
+        aluno.setDataNascimento(dataFormatada);
         aluno.setMatricula(Integer.parseInt(matricula));
         aluno.setCpf(cpf);
 
-        AlunosService service = ServiceFactory.create();
-        service.cadastrarAluno(aluno).enqueue(new Callback<ApiResult>(){
-            @Override
-            public void onResponse(Call<ApiResult> call, Response<ApiResult> response) {
-                ApiResult result = response.body();
+        presenter.cadastrarAluno(aluno);
 
-                if(result.isSucesso()){
-                    alert("Sucesso", "Cadastrado com sucesso");
-                }else{
-                    alert("Erro", "Erro ao cadastrar");
-                }
-            }
-            @Override
-            public void onFailure(Call<ApiResult> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
     }
 
-    private void alert(String titulo, String mensagem) {
+    public void abrirCalendario(View view) {
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "datePicker");
+    }
 
+    @Override
+    public void showMessage(String titulo, String mensagem) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle(titulo);
         alert.setMessage(mensagem);
+        alert.setPositiveButton("OK", new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
         alert.create();
         alert.show();
-
-
     }
 
+    public static class DatePickerFragment extends DialogFragment
+            implements DatePickerDialog.OnDateSetListener {
 
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current date as the default date in the picker
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            /* Do something with the date chosen by the user
+            String dia = String.format("%02d", day);
+            String mes = String.format("%02d", month+1);
+            String ano = String.format("%d", year);*/
+
+            String data = String.format("%02d/%02d/%d", day, month, year); //(dia + "/" + mes+ "/" + ano);
+            txtDataNascimento.setText(data);
+
+        }
+    }
 }

@@ -14,12 +14,25 @@
         android:id="@+id/txtNome"
         android:hint="Nome"
         />
-    <EditText
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/txtDataNascimento"
-        android:hint="Data de nascimento"
-        />
+        android:orientation="horizontal">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/txtDataNascimento"
+            android:hint="Data de nascimento"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_date_range"
+            android:layout_gravity="center"
+            android:onClick="abrirCalendario"
+            />
+    </LinearLayout>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,13 +46,14 @@
         android:hint="CPF"
         />
 
-
-
-
     <Button
-        android:layout_width="match_parent"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:text="Cadastrar"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:textColor="@color/branco"
+        android:textAllCaps="false"
+        android:layout_gravity="center"
         android:onClick="cadastrarAluno"
         />
 </LinearLayout>
