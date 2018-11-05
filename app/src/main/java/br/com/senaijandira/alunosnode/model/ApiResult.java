@@ -2,8 +2,8 @@ package br.com.senaijandira.alunosnode.model;
 
 public class ApiResult {
 
-    private boolean sucesso;
-    private String msg;
+   boolean sucesso;
+    String msg;
 
     public boolean isSucesso() {
         return sucesso;

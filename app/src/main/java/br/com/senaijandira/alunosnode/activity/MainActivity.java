@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity  implements MainView, Adapte
         listView = findViewById(R.id.listView);
         adapter = new AlunoAdapter(this);
         listView.setAdapter(adapter);
-        listView.setOnClickListener((View.OnClickListener) this);
+        listView.setOnItemClickListener(this);
 
         //Configurando o presenter e carregando os alunos
         presenter = new MainPresenter(this, ServiceFactory.create());

@@ -18,9 +18,9 @@ public interface AlunosService {
     @GET("/alunos") /* Assim como no banco, precisa realizar uma assinatura do método */
     Call<List<Aluno>> obterAlunos(); //Esse método não é void pois vai retornar uma chamda de lista de alunos
 
-    @GET("/aluno/{id}")
+    @GET("/alunos/{id}")
     Call<Aluno> obterAlunosPorId(@Path("id") int id);
 
-    @POST("/aluno/novo")
+    @POST("/alunos/novo")
     Call<ApiResult> cadastrarAluno(@Body Aluno aluno);
 }

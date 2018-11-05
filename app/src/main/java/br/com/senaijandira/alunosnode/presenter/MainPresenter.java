@@ -22,10 +22,7 @@ public class MainPresenter {
     }
 
     public void carregarAlunos() {
-
-        mainView.exibirBarraProgresso(); //Exibindo a barra de progresso que está na mainView
-
-        //Chamando a API
+        mainView.exibirBarraProgresso();
         Call<List<Aluno>> call = service.obterAlunos();
 
         //Executar a chamada da Api

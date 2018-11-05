@@ -15,7 +15,7 @@ public class CadastroPresenter {
     CadastroView view;
     AlunosService service;
 
-    public CadastroPresenter(Context ctx, AlunosService service) {
+    public CadastroPresenter(CadastroView view, AlunosService service) {
         this.service = service;
         this.view = view;
     }
