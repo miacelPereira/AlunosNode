@@ -1,13 +1,11 @@
 package br.com.senaijandira.alunosnode.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
-import java.util.List;
 
 import br.com.senaijandira.alunosnode.R;
 import br.com.senaijandira.alunosnode.model.Aluno;
@@ -15,9 +13,6 @@ import br.com.senaijandira.alunosnode.presenter.VisualizarPresenter;
 import br.com.senaijandira.alunosnode.service.AlunosService;
 import br.com.senaijandira.alunosnode.service.ServiceFactory;
 import br.com.senaijandira.alunosnode.view.VisualizarView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import util.DateUtil;
 
 public class VisualizarActivity extends AppCompatActivity implements VisualizarView {
@@ -28,7 +23,8 @@ public class VisualizarActivity extends AppCompatActivity implements VisualizarV
     DateUtil util;
     int idAluno;
 
-    TextView txtNomeResult, txtdtNascimentoResult, txtMatriculaResult, txtCpfResult;
+    TextView txtNomeResult, txtdtNascimentoResult, txtMatriculaResult, txtCpfResult, txtNotaResult;
+    Button btnBackHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +42,16 @@ public class VisualizarActivity extends AppCompatActivity implements VisualizarV
         txtdtNascimentoResult = findViewById(R.id.txtdtNascimentoResult);
         txtMatriculaResult = findViewById(R.id.txtMatriculaResult);
         txtCpfResult = findViewById(R.id.txtCpfResult);
+        txtNotaResult = findViewById(R.id.txtNotaResult);
+        btnBackHome = findViewById(R.id.btnBackHome);
         presenter.carregarAluno(idAluno);
 
+
+
+    }
+
+    public void backHome(View v){
+        startActivity(new Intent(this, MainActivity.class));
     }
 
     @Override
@@ -57,6 +61,7 @@ public class VisualizarActivity extends AppCompatActivity implements VisualizarV
         txtdtNascimentoResult.setText(util.convertToString(aluno.getDataNascimento()));
         txtMatriculaResult.setText(aluno.getMatricula()+"");
         txtCpfResult.setText(aluno.getCpf());
+        txtNotaResult.setText(aluno.calcularMedia().toString());
 
     }
 }

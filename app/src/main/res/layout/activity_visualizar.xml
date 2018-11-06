@@ -88,6 +88,26 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Média:"
+            android:textSize="18sp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:id="@+id/txtNotaResult"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="CPF:"
             android:textSize="18sp"
             />
@@ -96,6 +116,24 @@
             android:layout_height="wrap_content"
             android:text="487.169.628-69"
             android:id="@+id/txtCpfResult"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="40dp">
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="60dp"
+            android:id="@+id/btnBackHome"
+            android:text="Voltar"
+            android:onClick="backHome"
+            android:background="@color/colorPrimaryDark"
+            android:textAllCaps="false"
+            android:textColor="@color/branco"
             />
     </LinearLayout>
 </LinearLayout>
